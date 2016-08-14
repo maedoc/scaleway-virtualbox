@@ -9,6 +9,7 @@ set -eux
 sudo whoami 
 
 KERN_VERSION=$(uname -r |cut -d'-' -f1)
+EXTENDED_VERSION=$(uname -r |cut -d'-' -f2-)
 cd /var/tmp
 wget https://www.kernel.org/pub/linux/kernel/v4.x/linux-${KERN_VERSION}.tar.xz
 tar xf linux-${KERN_VERSION}.tar.xz -C /var/tmp/
