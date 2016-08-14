@@ -8,6 +8,16 @@ set -eux
 # Have the user call sudo early so the credentials is valid later on
 sudo whoami 
 
+
+# this isn't really needed (we don't call build-dep anymore)
+#for x in xenial xenial-security xenial-updates; do 
+#  egrep -qe "deb-src.* $x " /etc/apt/sources.list || echo "deb-src http://archive.ubuntu.com/ubuntu ${x} main universe" | sudo tee -a /etc/apt/sources.list
+#done
+
+echo "deb http://download.virtualbox.org/virtualbox/debian xenial contrib" | sudo tee -a /etc/apt/sources.list.d/virtualbox.list
+sudo apt update
+sudo apt-get install dkms virtualbox-5.0 -y
+
 KERN_VERSION=$(uname -r |cut -d'-' -f1)
 EXTENDED_VERSION=$(uname -r |cut -d'-' -f2-)
 cd /var/tmp
@@ -17,20 +27,9 @@ KERN_DIR="/var/tmp/linux-${KERN_VERSION}"
 cd "${KERN_DIR}"
 zcat /proc/config.gz > .config
 
-# this isn't really needed (we don't call build-dep anymore)
-#for x in xenial xenial-security xenial-updates; do 
-#  egrep -qe "deb-src.* $x " /etc/apt/sources.list || echo "deb-src http://archive.ubuntu.com/ubuntu ${x} main universe" | sudo tee -a /etc/apt/sources.list
-#done
-
-echo "deb http://download.virtualbox.org/virtualbox/debian xenial contrib" | sudo tee -a /etc/apt/sources.list.d/virtualbox.list
-
-sudo apt update
-
 # Fetch the tools necessary to build the kernel. Using generic because there may not be a package for our $KERN_VERSION.
 # .. actually we don't need the built objects, just the headers (include/ directory).
 #sudo apt-get build-dep linux-image-generic -y
-
-sudo apt-get install dkms virtualbox-5.0 -y
 
 NUM_CORES=$(cat /proc/cpuinfo|grep vendor_id|wc -l)
 
