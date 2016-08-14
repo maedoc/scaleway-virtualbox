@@ -27,8 +27,6 @@ sudo apt update
 sudo apt-get build-dep linux-image-generic -y
 sudo apt-get install libssl-dev -y # Also needed, not identified above.
 
-sed -e "s/EXTRAVERSION =.*/EXTRAVERSION = ${EXTENDED_VERSION}/" -i.orig Makefile
-
 NUM_CORES=$(cat /proc/cpuinfo|grep vendor_id|wc -l)
 
 make -j${NUM_CORES} oldconfig include/
