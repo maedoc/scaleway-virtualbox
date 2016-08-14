@@ -18,7 +18,7 @@ cd "${KERN_DIR}"
 zcat /proc/config.gz > .config
 
 for x in xenial xenial-security xenial-updates; do 
-  egrep -qe "deb-src.* $x " /etc/apt/sources.list || echo "deb-src http://archive.ubuntu.com/ubuntu ${x} main universe" | tee -a /etc/apt/sources.list
+  egrep -qe "deb-src.* $x " /etc/apt/sources.list || echo "deb-src http://archive.ubuntu.com/ubuntu ${x} main universe" | sudo tee -a /etc/apt/sources.list
 done
 
 sudo apt update
