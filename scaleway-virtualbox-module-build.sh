@@ -13,7 +13,7 @@ EXTENDED_VERSION=$(uname -r |cut -d'-' -f2-)
 cd /var/tmp
 wget https://www.kernel.org/pub/linux/kernel/v4.x/linux-${KERN_VERSION}.tar.xz
 tar xf linux-${KERN_VERSION}.tar.xz -C /var/tmp/
-export KERN_DIR="/var/tmp/linux-${KERN_VERSION}"
+KERN_DIR="/var/tmp/linux-${KERN_VERSION}"
 cd "${KERN_DIR}"
 zcat /proc/config.gz > .config
 
@@ -32,4 +32,4 @@ sed -e "s/EXTRAVERSION =.*/EXTRAVERSION = ${EXTENDED_VERSION}/" -i.orig Makefile
 NUM_CORES=$(cat /proc/cpuinfo|grep vendor_id|wc -l)
 make -j${NUM_CORES}
 
-sudo /sbin/rcvboxdrv setup
+sudo /sbin/rcvboxdrv setup --kernelsourcedir="${KERN_DIR}"
