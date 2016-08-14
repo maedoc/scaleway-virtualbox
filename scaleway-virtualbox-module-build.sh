@@ -37,3 +37,4 @@ NUM_CORES=$(cat /proc/cpuinfo|grep vendor_id|wc -l)
 make -j${NUM_CORES} oldconfig include/
 
 sudo -E /sbin/rcvboxdrv setup
+VBoxManage --version
