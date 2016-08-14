@@ -30,9 +30,7 @@ sudo apt-get install libssl-dev -y # Also needed, not identified above.
 sed -e "s/EXTRAVERSION =.*/EXTRAVERSION = ${EXTENDED_VERSION}/" -i.orig Makefile
 
 NUM_CORES=$(cat /proc/cpuinfo|grep vendor_id|wc -l)
-echo "Stop. We can't do make here because it would override the real kernel in the system so it wont boot next time"
-echo "I need to update this script to backup the kernel and then put it back after the script runs"
-exit
-make -j${NUM_CORES}
+
+make -j${NUM_CORES} make include/
 
 sudo /sbin/rcvboxdrv setup --kernelsourcedir="${KERN_DIR}"
