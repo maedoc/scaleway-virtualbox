@@ -13,7 +13,7 @@ EXTENDED_VERSION=$(uname -r |cut -d'-' -f2-)
 cd /var/tmp
 wget https://www.kernel.org/pub/linux/kernel/v4.x/linux-${KERN_VERSION}.tar.xz
 tar xf linux-${KERN_VERSION}.tar.xz -C /var/tmp/
-KERN_DIR="/var/tmp/linux-${KERN_VERSION}"
+export KERN_DIR="/var/tmp/linux-${KERN_VERSION}"
 cd "${KERN_DIR}"
 zcat /proc/config.gz > .config
 
@@ -26,6 +26,8 @@ sudo apt update
 # Fetch the tools necessary to build the kernel. Using generic because there may not be a package for our $KERN_VERSION.
 sudo apt-get build-dep linux-image-generic -y
 sudo apt-get install libssl-dev -y # Also needed, not identified above.
+
+sed -e "s/EXTRAVERSION =.*/EXTRAVERSION = ${EXTENDED_VERSION}/" -i.orig Makefile
 
 NUM_CORES=$(cat /proc/cpuinfo|grep vendor_id|wc -l)
 make -j${NUM_CORES}
