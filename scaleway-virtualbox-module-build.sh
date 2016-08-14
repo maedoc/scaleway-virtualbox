@@ -31,6 +31,6 @@ sed -e "s/EXTRAVERSION =.*/EXTRAVERSION = ${EXTENDED_VERSION}/" -i.orig Makefile
 
 NUM_CORES=$(cat /proc/cpuinfo|grep vendor_id|wc -l)
 
-make -j${NUM_CORES} include/
+make -j${NUM_CORES} oldconfig include/
 
 sudo -E /sbin/rcvboxdrv setup --kernelsourcedir="${KERN_DIR}"
