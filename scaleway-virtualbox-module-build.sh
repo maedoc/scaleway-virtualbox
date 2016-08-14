@@ -19,7 +19,8 @@ zcat /proc/config.gz > .config
 for x in xenial xenial-security xenial-updates; do 
   egrep -qe "deb-src.* $x " /etc/apt/sources.list || echo "deb-src http://archive.ubuntu.com/ubuntu ${x} main universe" | tee -a /etc/apt/sources.list
 done
-apt update
+
+sudo apt update
 
 # Fetch the tools necessary to build the kernel. Using generic because there may not be a package for our $KERN_VERSION.
 sudo apt-get build-dep linux-image-generic -y
