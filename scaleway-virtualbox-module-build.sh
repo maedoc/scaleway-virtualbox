@@ -31,7 +31,10 @@ sudo apt-get build-dep linux-image-generic -y
 
 NUM_CORES=$(cat /proc/cpuinfo|grep vendor_id|wc -l)
 
-make -j${NUM_CORES} oldconfig include modules
-
+# Two options here: full kernel build, which gives no warnings later. Or this partial build:
+# make -j${NUM_CORES} oldconfig include modules
+# If you do the partial build, the vboxdrv setup step below will fail and can be fixed with a "sudo modprobe -f vboxdrv"
+# Since that's annoying, I'm leaving the full build by default.
+make -j${NUM_CORES}
 sudo -E /sbin/rcvboxdrv setup
 VBoxManage --version
