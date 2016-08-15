@@ -22,7 +22,7 @@ EXTENDED_VERSION=$(uname -r |cut -d'-' -f2-)
 cd /var/tmp
 wget https://www.kernel.org/pub/linux/kernel/v4.x/linux-${KERN_VERSION}.tar.xz
 tar xf linux-${KERN_VERSION}.tar.xz -C /var/tmp/
-KERN_DIR="/var/tmp/linux-${KERN_VERSION}"
+export KERN_DIR="/var/tmp/linux-${KERN_VERSION}"
 cd "${KERN_DIR}"
 zcat /proc/config.gz > .config
 
