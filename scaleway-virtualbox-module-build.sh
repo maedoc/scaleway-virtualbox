@@ -14,8 +14,9 @@ for x in xenial xenial-security xenial-updates; do
 done
 
 echo "deb http://download.virtualbox.org/virtualbox/debian xenial contrib" | sudo tee -a /etc/apt/sources.list.d/virtualbox.list
+wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-key add -
 sudo apt update
-sudo apt-get install dkms virtualbox-5.0 -y
+sudo apt-get install dkms virtualbox-5.0 libssl-dev -y
 
 KERN_VERSION=$(uname -r |cut -d'-' -f1)
 EXTENDED_VERSION=$(uname -r |cut -d'-' -f2-)
